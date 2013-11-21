@@ -11,7 +11,7 @@
         @Html.DropDownListFor(m=>m.SelectedCharacterCount,Model.AvailableCharacterCount.Select(x=>new SelectListItem{Text = x.ToString(), Value = x.ToString()}))
     </p>
     <p>
-        @Model.Password
+        @Model.OriginalWord - @Model.Password
     </p>
     <input type="submit" value="Generate Password"/>
 }
