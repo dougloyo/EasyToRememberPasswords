@@ -1,5 +1,18 @@
-﻿@{
+﻿@model EasyToRememberPasswords.Models.PasswordViewModel
+@{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h1>Welcome to Easy To Remember Passwords</h1>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.LabelFor(m=>m.AvailableCharacterCount)
+        @Html.DropDownListFor(m=>m.SelectedCharacterCount,Model.AvailableCharacterCount.Select(x=>new SelectListItem{Text = x.ToString(), Value = x.ToString()}))
+    </p>
+    <p>
+        @Model.Password
+    </p>
+    <input type="submit" value="Generate Password"/>
+}
+
