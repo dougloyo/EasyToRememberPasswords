@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -19,6 +20,24 @@ namespace EasyToRememberPasswords
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            //Get reference to the source of the exception.
+            var ex = sender as Exception;
+
+            if (ex == null)
+                ex = Server.GetLastError();
+
+            new LogEvent(ex.ToString()).Raise();
+        }
+
+        public class LogEvent : WebRequestErrorEvent
+        {
+            public LogEvent(string message) : base(null, null, 100001, new Exception(message))
+            {
+            }
         }
     }
 }
